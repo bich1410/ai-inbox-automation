@@ -1,0 +1,348 @@
+[
+  {
+    "file": "invoice_001.pdf",
+    "invoice_number": "INV-2026-0001",
+    "vendor_name": "Figueroa and Sons",
+    "vendor_address": "819 Johnson Course, East William, AK 74064",
+    "customer_name": "Baldwin Ltd",
+    "invoice_date": "2026-08-26",
+    "due_date": "2026-10-10",
+    "currency": "GBP",
+    "line_items": [
+      {
+        "description": "Web design services",
+        "quantity": 5,
+        "unit_price": 137.55,
+        "line_total": 687.75
+      }
+    ],
+    "subtotal": 687.75,
+    "tax_rate": 5,
+    "tax_amount": 34.39,
+    "total": 722.14
+  },
+  {
+    "file": "invoice_002.pdf",
+    "invoice_number": "INV-2026-0002",
+    "vendor_name": "Cole LLC",
+    "vendor_address": "65423 Garcia Light, West Melanieview, AS 06196",
+    "customer_name": "Stevens, Martinez and Nielsen",
+    "invoice_date": "2026-08-18",
+    "due_date": "2026-09-01",
+    "currency": "USD",
+    "line_items": [
+      {
+        "description": "Monthly hosting",
+        "quantity": 2,
+        "unit_price": 124.95,
+        "line_total": 249.9
+      },
+      {
+        "description": "Office supplies",
+        "quantity": 9,
+        "unit_price": 308.97,
+        "line_total": 2780.73
+      },
+      {
+        "description": "Consulting (per hour)",
+        "quantity": 9,
+        "unit_price": 115.44,
+        "line_total": 1038.96
+      },
+      {
+        "description": "Web design services",
+        "quantity": 9,
+        "unit_price": 221.37,
+        "line_total": 1992.33
+      },
+      {
+        "description": "Data entry services",
+        "quantity": 8,
+        "unit_price": 302.85,
+        "line_total": 2422.8
+      }
+    ],
+    "subtotal": 8484.72,
+    "tax_rate": 0,
+    "tax_amount": 0.0,
+    "total": 8484.72
+  },
+  {
+    "file": "invoice_003.pdf",
+    "invoice_number": "INV-2026-0003",
+    "vendor_name": "Calderon-Montgomery",
+    "vendor_address": "103 Galloway Walk, Port Craig, KY 59930",
+    "customer_name": "Flowers, Martin and Kelly",
+    "invoice_date": "2026-07-07",
+    "due_date": "2026-08-21",
+    "currency": "EUR",
+    "line_items": [
+      {
+        "description": "Marketing campaign",
+        "quantity": 6,
+        "unit_price": 69.06,
+        "line_total": 414.36
+      },
+      {
+        "description": "Software license",
+        "quantity": 7,
+        "unit_price": 66.42,
+        "line_total": 464.94
+      },
+      {
+        "description": "Monthly hosting",
+        "quantity": 6,
+        "unit_price": 309.79,
+        "line_total": 1858.74
+      },
+      {
+        "description": "Equipment rental",
+        "quantity": 1,
+        "unit_price": 370.27,
+        "line_total": 370.27
+      }
+    ],
+    "subtotal": 3108.31,
+    "tax_rate": 0,
+    "tax_amount": 0.0,
+    "total": 3108.31
+  },
+  {
+    "file": "invoice_004.pdf",
+    "invoice_number": "INV-2026-0004",
+    "vendor_name": "Zuniga, Wong and Lynch",
+    "vendor_address": "76483 Cameron Trail, East Lydiamouth, MO 35594",
+    "customer_name": "Clark PLC",
+    "invoice_date": "2026-08-29",
+    "due_date": "2026-09-12",
+    "currency": "GBP",
+    "line_items": [
+      {
+        "description": "Office supplies",
+        "quantity": 10,
+        "unit_price": 112.3,
+        "line_total": 1123.0
+      },
+      {
+        "description": "Data entry services",
+        "quantity": 2,
+        "unit_price": 42.0,
+        "line_total": 84.0
+      },
+      {
+        "description": "Marketing campaign",
+        "quantity": 4,
+        "unit_price": 391.07,
+        "line_total": 1564.28
+      },
+      {
+        "description": "Equipment rental",
+        "quantity": 2,
+        "unit_price": 430.55,
+        "line_total": 861.1
+      },
+      {
+        "description": "Software license",
+        "quantity": 2,
+        "unit_price": 202.46,
+        "line_total": 404.92
+      }
+    ],
+    "subtotal": 4037.3,
+    "tax_rate": 10,
+    "tax_amount": 403.73,
+    "total": 4441.03
+  },
+  {
+    "file": "invoice_005.pdf",
+    "invoice_number": "INV-2026-0005",
+    "vendor_name": "Lewis-Porter",
+    "vendor_address": "42388 Burgess Meadow Suite 532, Daviston, VI 14872",
+    "customer_name": "Burton Ltd",
+    "invoice_date": "2026-09-16",
+    "due_date": "2026-10-16",
+    "currency": "GBP",
+    "line_items": [
+      {
+        "description": "Marketing campaign",
+        "quantity": 4,
+        "unit_price": 341.68,
+        "line_total": 1366.72
+      },
+      {
+        "description": "Software license",
+        "quantity": 2,
+        "unit_price": 312.38,
+        "line_total": 624.76
+      }
+    ],
+    "subtotal": 1991.48,
+    "tax_rate": 5,
+    "tax_amount": 99.57,
+    "total": 2091.05
+  },
+  {
+    "file": "invoice_006.pdf",
+    "invoice_number": "INV-2026-0006",
+    "vendor_name": "Cruz PLC",
+    "vendor_address": "Unit 8480 Box 1845, DPO AE 38970",
+    "customer_name": "Moore-Smith",
+    "invoice_date": "2026-08-06",
+    "due_date": "2026-09-20",
+    "currency": "USD",
+    "line_items": [
+      {
+        "description": "Software license",
+        "quantity": 7,
+        "unit_price": 149.57,
+        "line_total": 1046.99
+      },
+      {
+        "description": "Consulting (per hour)",
+        "quantity": 9,
+        "unit_price": 125.42,
+        "line_total": 1128.78
+      }
+    ],
+    "subtotal": 2175.77,
+    "tax_rate": 8,
+    "tax_amount": 174.06,
+    "total": 2349.83
+  },
+  {
+    "file": "invoice_007.pdf",
+    "invoice_number": "INV-2026-0007",
+    "vendor_name": "Baker, Mason and White",
+    "vendor_address": "PSC 4893, Box 2528, APO AP 00575",
+    "customer_name": "Nguyen, Smith and Hickman",
+    "invoice_date": "2026-09-02",
+    "due_date": "2026-09-16",
+    "currency": "GBP",
+    "line_items": [
+      {
+        "description": "Marketing campaign",
+        "quantity": 7,
+        "unit_price": 148.52,
+        "line_total": 1039.64
+      }
+    ],
+    "subtotal": 1039.64,
+    "tax_rate": 5,
+    "tax_amount": 51.98,
+    "total": 1091.62
+  },
+  {
+    "file": "invoice_008.pdf",
+    "invoice_number": "INV-2026-0008",
+    "vendor_name": "Allen-Allen",
+    "vendor_address": "71822 Arroyo Expressway, Allisonchester, IL 71187",
+    "customer_name": "Vaughn, Marquez and Ross",
+    "invoice_date": "2026-09-17",
+    "due_date": "2026-11-01",
+    "currency": "GBP",
+    "line_items": [
+      {
+        "description": "Consulting (per hour)",
+        "quantity": 7,
+        "unit_price": 444.65,
+        "line_total": 3112.55
+      },
+      {
+        "description": "Marketing campaign",
+        "quantity": 8,
+        "unit_price": 88.58,
+        "line_total": 708.64
+      },
+      {
+        "description": "Equipment rental",
+        "quantity": 3,
+        "unit_price": 138.38,
+        "line_total": 415.14
+      }
+    ],
+    "subtotal": 4236.33,
+    "tax_rate": 8,
+    "tax_amount": 338.91,
+    "total": 4575.24
+  },
+  {
+    "file": "invoice_009.pdf",
+    "invoice_number": "INV-2026-0009",
+    "vendor_name": "Kim-Holmes",
+    "vendor_address": "50983 Adrian Station, East Carloston, VI 43810",
+    "customer_name": "Palmer LLC",
+    "invoice_date": "2026-08-29",
+    "due_date": "2026-10-13",
+    "currency": "EUR",
+    "line_items": [
+      {
+        "description": "Data entry services",
+        "quantity": 9,
+        "unit_price": 256.89,
+        "line_total": 2312.01
+      },
+      {
+        "description": "Software license",
+        "quantity": 1,
+        "unit_price": 433.33,
+        "line_total": 433.33
+      },
+      {
+        "description": "Monthly hosting",
+        "quantity": 3,
+        "unit_price": 321.17,
+        "line_total": 963.51
+      },
+      {
+        "description": "Marketing campaign",
+        "quantity": 7,
+        "unit_price": 306.28,
+        "line_total": 2143.96
+      }
+    ],
+    "subtotal": 5852.81,
+    "tax_rate": 10,
+    "tax_amount": 585.28,
+    "total": 6438.09
+  },
+  {
+    "file": "invoice_010.pdf",
+    "invoice_number": "INV-2026-0010",
+    "vendor_name": "Ryan Ltd",
+    "vendor_address": "USCGC Sanchez, FPO AA 53855",
+    "customer_name": "Davis Ltd",
+    "invoice_date": "2026-08-29",
+    "due_date": "2026-10-13",
+    "currency": "GBP",
+    "line_items": [
+      {
+        "description": "Office supplies",
+        "quantity": 9,
+        "unit_price": 380.42,
+        "line_total": 3423.78
+      },
+      {
+        "description": "Equipment rental",
+        "quantity": 6,
+        "unit_price": 73.55,
+        "line_total": 441.3
+      },
+      {
+        "description": "Web design services",
+        "quantity": 7,
+        "unit_price": 95.92,
+        "line_total": 671.44
+      },
+      {
+        "description": "Marketing campaign",
+        "quantity": 1,
+        "unit_price": 477.83,
+        "line_total": 477.83
+      }
+    ],
+    "subtotal": 5014.35,
+    "tax_rate": 8,
+    "tax_amount": 401.15,
+    "total": 5415.5
+  }
+]
