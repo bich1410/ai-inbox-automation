@@ -59,3 +59,10 @@ class Invoice(BaseModel):
             issues.append("due_date is earlier than invoice_date")
 
         return issues
+
+class ExtractResponse(BaseModel):
+    """Kết quả trả về của endpoint /extract."""
+
+    invoice: Invoice
+    issues: list[str] = Field(description="Logic problems found, empty if everything is consistent")
+    needs_review: bool = Field(description="True if a human should check this invoice")
