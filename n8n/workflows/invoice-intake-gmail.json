@@ -21,8 +21,8 @@
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.4,
       "position": [
-        0,
-        0
+        224,
+        -32
       ],
       "id": "fb861220-a8f4-406a-b92f-c4035c95dae8",
       "name": "Gmail Trigger",
@@ -44,7 +44,7 @@
             {
               "parameterType": "formBinaryData",
               "name": "file",
-              "inputDataFieldName": "attachment_0"
+              "inputDataFieldName": "file"
             }
           ]
         },
@@ -55,11 +55,13 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        208,
-        16
+        656,
+        -16
       ],
       "id": "85bebbbe-f7f1-4484-ab42-e5f0ef89e235",
-      "name": "Extract invoice"
+      "name": "Extract invoice",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
     },
     {
       "parameters": {
@@ -89,8 +91,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        432,
-        16
+        880,
+        -16
       ],
       "id": "aae3ab1a-0faf-48da-8b5e-9e00759c2f0f",
       "name": "If"
@@ -107,11 +109,13 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        656,
-        -80
+        1104,
+        -112
       ],
       "id": "a2dae6e4-63d6-48df-baa2-2ffeab79b216",
-      "name": "Save invoice"
+      "name": "Save invoice",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
     },
     {
       "parameters": {
@@ -133,8 +137,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        656,
-        112
+        1104,
+        80
       ],
       "id": "e7126b11-b615-4057-92f4-1de8857440a4",
       "name": "Ask reviewer",
@@ -158,11 +162,26 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        880,
-        112
+        1328,
+        80
       ],
       "id": "861549fd-308c-4114-a8fe-fdde3bf2b961",
-      "name": "Save reviewed invoice"
+      "name": "Save reviewed invoice",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nfor (const item of $input.all()) {\n  const attachments = item.binary || {};\n\n  for (const file of Object.values(attachments)) {\n    const fileName = (file.fileName || '').toLowerCase();\n    const isPdf = file.mimeType === 'application/pdf' || fileName.endsWith('.pdf');\n    if (!isPdf) continue; // bỏ qua logo, ảnh, file khác\n\n    results.push({\n      json: { emailId: item.json.id, fileName: file.fileName },\n      binary: { file },\n    });\n  }\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        -32
+      ],
+      "id": "64254cb2-ec09-402e-9f37-efb85c9024c1",
+      "name": "Split PDF attachments"
     }
   ],
   "connections": {
@@ -170,7 +189,7 @@
       "main": [
         [
           {
-            "node": "Extract invoice",
+            "node": "Split PDF attachments",
             "type": "main",
             "index": 0
           }
@@ -211,6 +230,17 @@
         [
           {
             "node": "Save reviewed invoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split PDF attachments": {
+      "main": [
+        [
+          {
+            "node": "Extract invoice",
             "type": "main",
             "index": 0
           }

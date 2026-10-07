@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from fastapi import Depends, FastAPI, File, HTTPException, Query, UploadFile
+from fastapi import Depends, FastAPI, File, HTTPException, Query, Response, UploadFile
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -49,7 +49,11 @@ def extract(file: UploadFile = File(...)):
 
 
 @app.post("/invoices", response_model=InvoiceSummary, status_code=201)
-def save_invoice(payload: SaveInvoiceRequest, session: Session = Depends(get_session)):
+def save_invoice(
+    payload: SaveInvoiceRequest,
+    response: Response,
+    session: Session = Depends(get_session),
+):
     invoice = payload.invoice
 
     # Server tự kiểm tra lại, không tin phía gọi
@@ -91,10 +95,19 @@ def save_invoice(payload: SaveInvoiceRequest, session: Session = Depends(get_ses
         session.commit()
     except IntegrityError as error:
         session.rollback()
-        raise HTTPException(
-            status_code=409,
-            detail=f"Invoice {invoice.invoice_number} from {invoice.vendor_name} already exists",
-        ) from error
+        # Hóa đơn này (cùng nhà cung cấp và số hóa đơn) đã được lưu: trả lại bản cũ, không báo lỗi
+        existing = session.scalar(
+            select(InvoiceRecord).where(
+                InvoiceRecord.vendor_name == invoice.vendor_name,
+                InvoiceRecord.invoice_number == invoice.invoice_number,
+            )
+        )
+        if existing is None:
+            raise HTTPException(
+                status_code=409, detail="Could not save the invoice because of a database constraint"
+            ) from error
+        response.status_code = 200
+        return existing
 
     session.refresh(record)  # nạp lại các giá trị do database tự sinh (id, created_at)
     return record
