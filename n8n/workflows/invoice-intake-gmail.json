@@ -112,6 +112,57 @@
       ],
       "id": "a2dae6e4-63d6-48df-baa2-2ffeab79b216",
       "name": "Save invoice"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "8598923536",
+        "message": "=Invoice needs review\n\nVendor: {{ $json.invoice.vendor_name }}\nNumber: {{ $json.invoice.invoice_number }}\nTotal: {{ $json.invoice.total }} {{ $json.invoice.currency }}\n\nIssues:\n{{ $json.issues.join('\\n') }}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "disapproveLabel": "❌ Reject"
+          }
+        },
+        "options": {
+          "limitWaitTime": {
+            "values": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        656,
+        112
+      ],
+      "id": "e7126b11-b615-4057-92f4-1de8857440a4",
+      "name": "Ask reviewer",
+      "webhookId": "9f0e5c90-b079-4cd1-9a16-0d3a12f6386f",
+      "credentials": {
+        "telegramApi": {
+          "id": "gz8zSnToM4qHQaVp",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/invoices",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ invoice: $('Extract invoice').item.json.invoice, status: $json.data.approved ? \"approved\" : \"rejected\", source: \"gmail\" }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        880,
+        112
+      ],
+      "id": "861549fd-308c-4114-a8fe-fdde3bf2b961",
+      "name": "Save reviewed invoice"
     }
   ],
   "connections": {
@@ -142,6 +193,24 @@
         [
           {
             "node": "Save invoice",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ask reviewer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask reviewer": {
+      "main": [
+        [
+          {
+            "node": "Save reviewed invoice",
             "type": "main",
             "index": 0
           }
