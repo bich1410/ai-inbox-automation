@@ -1,0 +1,57 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1de1b36d-a9b3-49e1-831f-f26657ba1f03",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "8598923536",
+        "text": "=Invoice workflow failed\n\nWorkflow: {{ $json.workflow.name }}\nFailed node: {{ $json.execution?.lastNodeExecuted ?? 'trigger' }}\nError: {{ String($json.execution?.error?.message ?? $json.trigger?.error?.message ?? 'unknown').replace(/[_*\\[\\]`<>&]/g, ' ').slice(0, 500) }}\nOpen: {{ $json.execution?.url ?? '' }}",
+        "additionalFields": {
+          "appendAttribution": true
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "55eb0ed5-197a-45f4-a3b3-2b5c0f7a0a0d",
+      "name": "Send a text message",
+      "webhookId": "efc4b123-2b6e-47e5-a7a3-2ca5b08a33f8",
+      "credentials": {
+        "telegramApi": {
+          "id": "gz8zSnToM4qHQaVp",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "12c0db28d91d75188d04a01c633066e43d2c722c83f3cf5fcd10160c40da53f5"
+  }
+}

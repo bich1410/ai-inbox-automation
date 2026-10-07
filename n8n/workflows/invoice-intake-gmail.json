@@ -11,7 +11,7 @@
         },
         "simple": false,
         "filters": {
-          "q": "has:attachment filename:pdf"
+          "q": "has:attachment filename:pdf -label:invoice-processed"
         },
         "options": {
           "dataPropertyAttachmentsPrefixName": "attachment_",
@@ -182,6 +182,30 @@
       ],
       "id": "64254cb2-ec09-402e-9f37-efb85c9024c1",
       "name": "Split PDF attachments"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Split PDF attachments').item.json.emailId }}",
+        "labelIds": [
+          "Label_3722744771082462702"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1584,
+        -32
+      ],
+      "id": "721591ab-5811-433d-8bb7-70a8ef6cce32",
+      "name": "Mark email processed",
+      "webhookId": "09bb02e1-04af-4ec3-a7ac-00aba5e05ec9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Gq9J9MLI7UcB49Zv",
+          "name": "Gmail account"
+        }
+      }
     }
   ],
   "connections": {
@@ -225,11 +249,33 @@
         ]
       ]
     },
+    "Save invoice": {
+      "main": [
+        [
+          {
+            "node": "Mark email processed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Ask reviewer": {
       "main": [
         [
           {
             "node": "Save reviewed invoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save reviewed invoice": {
+      "main": [
+        [
+          {
+            "node": "Mark email processed",
             "type": "main",
             "index": 0
           }
