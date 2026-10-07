@@ -8,3 +8,5 @@ reportlab
 pytest
 pdfplumber
 google-genai
+sqlalchemy
+psycopg[binary]

@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     llm_api_key: str
     llm_model: str
     llm_fallback_model: str | None = None
+    database_url: str
 
 
 settings = Settings()

@@ -2,34 +2,6 @@
   "nodes": [
     {
       "parameters": {
-        "method": "POST",
-        "url": "http://127.0.0.1:8000/extract",
-        "sendBody": true,
-        "contentType": "multipart-form-data",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "parameterType": "formBinaryData",
-              "name": "file",
-              "inputDataFieldName": "attachment_0"
-            }
-          ]
-        },
-        "options": {
-          "timeout": 30000
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.5,
-      "position": [
-        208,
-        16
-      ],
-      "id": "85bebbbe-f7f1-4484-ab42-e5f0ef89e235",
-      "name": "HTTP Request"
-    },
-    {
-      "parameters": {
         "pollTimes": {
           "item": [
             {
@@ -60,6 +32,86 @@
           "name": "Gmail account"
         }
       }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/extract",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "attachment_0"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        208,
+        16
+      ],
+      "id": "85bebbbe-f7f1-4484-ab42-e5f0ef89e235",
+      "name": "Extract invoice"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2b58cf23-1dd4-4df1-b1d0-ef33832bc4eb",
+              "leftValue": "={{ $json.needs_review }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        432,
+        16
+      ],
+      "id": "aae3ab1a-0faf-48da-8b5e-9e00759c2f0f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/invoices",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ invoice: $json.invoice, status: \"auto_approved\", source: \"gmail\" }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        656,
+        -80
+      ],
+      "id": "a2dae6e4-63d6-48df-baa2-2ffeab79b216",
+      "name": "Save invoice"
     }
   ],
   "connections": {
@@ -67,7 +119,29 @@
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": "Extract invoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract invoice": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Save invoice",
             "type": "main",
             "index": 0
           }

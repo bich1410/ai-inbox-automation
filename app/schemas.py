@@ -1,8 +1,9 @@
 """Schema (khuôn dữ liệu) cho hóa đơn: dùng cho LLM, kiểm tra và đánh giá."""
 
-from datetime import date
+from datetime import date, datetime
+from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class LineItem(BaseModel):
@@ -66,3 +67,31 @@ class ExtractResponse(BaseModel):
     invoice: Invoice
     issues: list[str] = Field(description="Logic problems found, empty if everything is consistent")
     needs_review: bool = Field(description="True if a human should check this invoice")
+
+
+InvoiceStatus = Literal["auto_approved", "approved", "rejected"]
+
+
+class SaveInvoiceRequest(BaseModel):
+    """Nội dung gửi lên endpoint POST /invoices."""
+
+    invoice: Invoice
+    status: InvoiceStatus = Field(description="auto_approved, or approved/rejected by a human")
+    source: str | None = Field(default=None, description="Where the invoice came from, e.g. gmail")
+
+
+class InvoiceSummary(BaseModel):
+    """Một hóa đơn đã lưu, dạng gọn."""
+
+    model_config = ConfigDict(from_attributes=True)  # cho phép đọc thẳng từ đối tượng của SQLAlchemy
+
+    id: int
+    invoice_number: str
+    vendor_name: str
+    invoice_date: date
+    currency: str
+    total: float
+    status: str
+    source: str | None
+    issues: list[str]
+    created_at: datetime
