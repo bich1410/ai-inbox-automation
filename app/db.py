@@ -3,6 +3,7 @@
 from datetime import date, datetime
 from decimal import Decimal
 
+from pgvector.sqlalchemy import Vector
 from sqlalchemy import (
     Date,
     DateTime,
@@ -19,6 +20,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship,
 
 from app.config import settings
 
+# Supabase đưa chuỗi bắt đầu bằng postgresql:// hoặc postgres://, SQLAlchemy cần chỉ rõ dùng driver psycopg
 DATABASE_URL = settings.database_url
 for prefix in ("postgresql://", "postgres://"):
     if DATABASE_URL.startswith(prefix):
@@ -27,10 +29,13 @@ for prefix in ("postgresql://", "postgres://"):
 
 engine = create_engine(
     DATABASE_URL,
-    pool_pre_ping=True,  # kiểm tra kết nối còn sống trước khi dùng (database Neon có thể đã ngủ)
-    connect_args={"connect_timeout": 15},  # đợi tối đa 15 giây khi đánh thức database
+    pool_pre_ping=True,  # kiểm tra kết nối còn sống trước khi dùng
+    connect_args={"connect_timeout": 15},  # đợi tối đa 15 giây khi database đang thức dậy
 )
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
+
+# Số chiều của vector embedding. Đổi số này nghĩa là phải tạo lại toàn bộ vector
+EMBEDDING_DIM = 768
 
 
 class Base(DeclarativeBase):
@@ -60,6 +65,9 @@ class InvoiceRecord(Base):
     issues: Mapped[list] = mapped_column(JSONB, default=list)  # các cảnh báo từ totals_issues()
     source: Mapped[str | None] = mapped_column(String(50))  # ví dụ gmail, webhook
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+    # Vector mô tả hóa đơn để tìm theo ngữ nghĩa. Để trống (NULL) cho đến khi được tạo
+    embedding: Mapped[list[float] | None] = mapped_column(Vector(EMBEDDING_DIM))
 
     line_items: Mapped[list["LineItemRecord"]] = relationship(
         back_populates="invoice", cascade="all, delete-orphan"

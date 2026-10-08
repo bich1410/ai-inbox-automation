@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     llm_api_key: str
     llm_model: str
     llm_fallback_model: str | None = None
+    embedding_model: str = "gemini-embedding-001"
     database_url: str
 
 
