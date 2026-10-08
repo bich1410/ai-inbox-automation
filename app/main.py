@@ -9,11 +9,14 @@ from app.config import settings
 from app.db import InvoiceRecord, LineItemRecord, get_session
 from app.extractor import ExtractionError, extract_invoice
 from app.pdf_reader import PdfReadError, extract_text
+from app.routes_ask import router as ask_router
 from app.schemas import ExtractResponse, InvoiceSummary, SaveInvoiceRequest
+
 
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024  # 10 MB
 
 app = FastAPI(title="AI Inbox Automation")
+app.include_router(ask_router)
 
 
 def to_decimal(value: float | None) -> Decimal | None:
