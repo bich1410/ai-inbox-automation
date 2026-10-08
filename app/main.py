@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.config import settings
 from app.db import InvoiceRecord, LineItemRecord, get_session
+from app.embeddings import attach_embedding
 from app.extractor import ExtractionError, extract_invoice
 from app.pdf_reader import PdfReadError, extract_text
 from app.routes_ask import router as ask_router
@@ -113,6 +114,7 @@ def save_invoice(
         return existing
 
     session.refresh(record)  # nạp lại các giá trị do database tự sinh (id, created_at)
+    attach_embedding(session, record)  # cố gắng tạo vector; lỗi cũng không làm hỏng việc lưu
     return record
 
 

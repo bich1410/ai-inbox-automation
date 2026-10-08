@@ -1,0 +1,190 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "questions": 15,
+  "tool_correct": 11,
+  "answer_correct": 10,
+  "both_correct": 10,
+  "avg_seconds": 3.61,
+  "cases": [
+    {
+      "name": "currency_totals_en",
+      "question": "How many invoices are there, and what is the total amount per currency?",
+      "tools_used": [
+        "invoice_stats"
+      ],
+      "tool_ok": true,
+      "answer_ok": true,
+      "problems": [],
+      "seconds": 4.0,
+      "answer": "There are 13 invoices in total, broken down by currency as follows:\n\n* **GBP:** 7 invoices, total amount: £19,108.72\n* **USD:** 4 invoices, total amount: $11,109.55\n* **EUR:** 2 invoices, total amount: €9,546.40"
+    },
+    {
+      "name": "currency_totals_vi",
+      "question": "Có tất cả bao nhiêu hóa đơn, và tổng tiền theo từng loại tiền tệ là bao nhiêu?",
+      "tools_used": [
+        "invoice_stats"
+      ],
+      "tool_ok": true,
+      "answer_ok": true,
+      "problems": [],
+      "seconds": 2.0,
+      "answer": "Tổng cộng có 13 hóa đơn, được chia theo các loại tiền tệ như sau:\n\n* **GBP**: 7 hóa đơn, tổng tiền là **19,108.72 GBP**\n* **USD**: 4 hóa đơn, tổng tiền là **11,109.55 USD**\n* **EUR**: 2 hóa đơn, tổng tiền là **9,546.40 EUR**"
+    },
+    {
+      "name": "vendor_total",
+      "question": "What is the total amount invoiced by Cole LLC?",
+      "tools_used": [
+        "invoice_stats"
+      ],
+      "tool_ok": true,
+      "answer_ok": true,
+      "problems": [],
+      "seconds": 2.5,
+      "answer": "The total amount invoiced by Cole LLC is **$8,484.72 USD** (across 1 invoice)."
+    },
+    {
+      "name": "customer_invoices",
+      "question": "Which invoices were issued to Stevens, Martinez and Nielsen?",
+      "tools_used": [
+        "search_invoices"
+      ],
+      "tool_ok": true,
+      "answer_ok": true,
+      "problems": [],
+      "seconds": 2.13,
+      "answer": "The following invoice was issued to Stevens, Martinez and Nielsen:\n\n- **Invoice Number:** INV-2026-0002\n- **Vendor:** Cole LLC\n- **Date:** 2026-08-18\n- **Total:** $8,484.72 USD\n- **Status:** Auto-approved\n- **Items:** Monthly hosting, Office supplies, Consulting (per hour), Web design services, Data entry services"
+    },
+    {
+      "name": "month_count",
+      "question": "How many invoices have an invoice date in 2026-08?",
+      "tools_used": [
+        "invoice_stats"
+      ],
+      "tool_ok": true,
+      "answer_ok": true,
+      "problems": [],
+      "seconds": 2.07,
+      "answer": "There are 6 invoices with an invoice date in August 2026, across the following currencies:\n\n- **EUR**: 1 invoice (Total: 6,438.09 EUR)\n- **GBP**: 3 invoices (Total: 10,578.67 GBP)\n- **USD**: 2 invoices (Total: 10,834.55 USD)"
+    },
+    {
+      "name": "monthly_totals",
+      "question": "Show the total amount per month.",
+      "tools_used": [
+        "invoice_stats"
+      ],
+      "tool_ok": true,
+      "answer_ok": true,
+      "problems": [],
+      "seconds": 2.28,
+      "answer": "Total amount per month (split by currency):\n\n* **2026-07**\n  * EUR: 3,108.31 (1 invoice)\n\n* **2026-08**\n  * EUR: 6,438.09 (1 invoice)\n  * GBP: 10,578.67 (3 invoices)\n  * USD: 10,834.55 (2 invoices)\n\n* **2026-09**\n  * GBP: 8,530.05 (4 invoices)\n\n* **2026-10**\n  * USD: 275.00 (2 invoices)"
+    },
+    {
+      "name": "amount_filter",
+      "question": "Which invoices have a total above 1091.62 GBP?",
+      "tools_used": [
+        "search_invoices"
+      ],
+      "tool_ok": true,
+      "answer_ok": true,
+      "problems": [],
+      "seconds": 2.34,
+      "answer": "The invoices with a total above 1091.62 GBP are:\n\n1. **INV-2026-0008**\n   - Vendor: Allen-Allen\n   - Customer: Vaughn, Marquez and Ross\n   - Date: 2026-09-17\n   - Total: 4,575.24 GBP\n   - Status: auto_approved\n\n2. **INV-2026-0005**\n   - Vendor: Lewis-Porter\n   - Customer: Burton Ltd\n   - Date: 2026-09-16\n   - Total: 2,091.05 GBP\n   - Status: auto_approved\n\n3. **INV-2026-0010**\n   - Vendor: Ryan Ltd\n   - Customer: Davis Ltd\n   - Date: 2026-08-29\n   - Total: 5,415.50 GBP\n   - Status: auto_approved\n\n4. **INV-2026-0004**\n   - Vendor: Zuniga, Wong and Lynch\n   - Customer: Clark PLC\n   - Date: 2026-08-29\n   - Total: 4,441.03 GBP\n   - Status: auto_approved"
+    },
+    {
+      "name": "status_counts",
+      "question": "How many invoices are there in each review status?",
+      "tools_used": [
+        "invoice_stats"
+      ],
+      "tool_ok": true,
+      "answer_ok": false,
+      "problems": [
+        "thiếu số: [12]"
+      ],
+      "seconds": 10.76,
+      "answer": "Here is the invoice count and total amount grouped by review status and currency:\n\n* **Approved**\n  * GBP: 1 invoice (Total: 772.14 GBP)\n\n* **Auto-approved**\n  * EUR: 2 invoices (Total: 9,546.40 EUR)\n  * GBP: 6 invoices (Total: 18,336.58 GBP)\n  * USD: 4 invoices (Total: 11,109.55 USD)"
+    },
+    {
+      "name": "semantic_hosting",
+      "question": "Which invoices are about server hosting fees?",
+      "tools_used": [],
+      "tool_ok": false,
+      "answer_ok": false,
+      "problems": [
+        "lỗi agent: All models are unavailable. Last error: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+      ],
+      "seconds": 2.64,
+      "answer": ""
+    },
+    {
+      "name": "semantic_advertising",
+      "question": "Which invoices relate to advertising?",
+      "tools_used": [],
+      "tool_ok": false,
+      "answer_ok": false,
+      "problems": [
+        "lỗi agent: All models are unavailable. Last error: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+      ],
+      "seconds": 2.47,
+      "answer": ""
+    },
+    {
+      "name": "semantic_website",
+      "question": "Show me invoices for website work",
+      "tools_used": [],
+      "tool_ok": false,
+      "answer_ok": false,
+      "problems": [
+        "lỗi agent: All models are unavailable. Last error: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+      ],
+      "seconds": 2.44,
+      "answer": ""
+    },
+    {
+      "name": "semantic_equipment_vi",
+      "question": "Hóa đơn nào liên quan đến thuê thiết bị?",
+      "tools_used": [],
+      "tool_ok": false,
+      "answer_ok": false,
+      "problems": [
+        "lỗi agent: All models are unavailable. Last error: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}"
+      ],
+      "seconds": 4.73,
+      "answer": ""
+    },
+    {
+      "name": "date_range",
+      "question": "How many invoices are dated between 2026-07-07 and 2026-08-29, inclusive?",
+      "tools_used": [
+        "invoice_stats"
+      ],
+      "tool_ok": true,
+      "answer_ok": true,
+      "problems": [],
+      "seconds": 1.73,
+      "answer": "There are 7 invoices dated between 2026-07-07 and 2026-08-29, inclusive (broken down by currency: 2 in EUR, 3 in GBP, and 2 in USD)."
+    },
+    {
+      "name": "relative_date_vi",
+      "question": "Có bao nhiêu hóa đơn được lập trong 30 ngày gần đây?",
+      "tools_used": [
+        "invoice_stats"
+      ],
+      "tool_ok": true,
+      "answer_ok": true,
+      "problems": [],
+      "seconds": 2.07,
+      "answer": "Trong 30 ngày gần đây (từ 2026-09-08 đến 2026-10-08), có tổng cộng **4 hóa đơn** được lập, chia theo các đồng tiền như sau:\n\n- **GBP**: 2 hóa đơn (tổng giá trị: 6.666,29 GBP)\n- **USD**: 2 hóa đơn (tổng giá trị: 275,00 USD)"
+    },
+    {
+      "name": "out_of_scope",
+      "question": "What is the capital of France?",
+      "tools_used": [],
+      "tool_ok": true,
+      "answer_ok": true,
+      "problems": [],
+      "seconds": 10.05,
+      "answer": "I can only answer questions about the invoice data."
+    }
+  ]
+}
