@@ -1,0 +1,6 @@
+# Cấu hình chạy Streamlit trong GitHub Codespaces (qua chuyển tiếp cổng).
+# enableCORS và enableXsrfProtection chỉ dành cho môi trường dev này, không dùng khi triển khai công khai.
+[server]
+headless = true
+enableCORS = false
+enableXsrfProtection = false

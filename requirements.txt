@@ -11,3 +11,4 @@ google-genai
 sqlalchemy
 psycopg[binary]
 pgvector
+streamlit
