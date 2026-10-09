@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 from app.auth import require_api_key
 from app.db import InvoiceRecord, LineItemRecord, get_session
 from app.embeddings import attach_embedding
-from app.extractor import ExtractionError, extract_invoice
-from app.pdf_reader import PdfReadError, extract_text
+from app.extractor import ExtractionError, extract_from_pdf_bytes
+from app.pdf_reader import PdfReadError
 from app.routes_ask import router as ask_router
 from app.schemas import ExtractResponse, InvoiceSummary, SaveInvoiceRequest
 
@@ -41,14 +41,12 @@ def extract(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Only PDF files are supported")
 
     try:
-        text = extract_text(pdf_bytes)
+        outcome = extract_from_pdf_bytes(pdf_bytes)
     except PdfReadError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
-
-    try:
-        invoice = extract_invoice(text)
     except ExtractionError as error:
         raise HTTPException(status_code=502, detail=str(error)) from error
+    invoice = outcome.invoice
 
     issues = invoice.totals_issues()
     return ExtractResponse(invoice=invoice, issues=issues, needs_review=bool(issues))

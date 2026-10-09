@@ -12,3 +12,5 @@ sqlalchemy
 psycopg[binary]
 pgvector
 streamlit
+pypdfium2
+pillow

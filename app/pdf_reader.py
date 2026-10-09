@@ -4,20 +4,25 @@ import io
 
 import pdfplumber
 
+MIN_TEXT_CHARS = 30  # ít chữ hơn mức này thì coi như PDF không có lớp chữ (bản scan)
+
 
 class PdfReadError(Exception):
-    """File không đọc được hoặc không có chữ."""
+    """File không đọc được."""
+
+
+class NoTextLayerError(PdfReadError):
+    """PDF mở được nhưng không có lớp chữ, thường là ảnh scan hoặc ảnh chụp."""
 
 
 def extract_text(pdf_bytes: bytes) -> str:
     try:
-        # pdfplumber cần một "file-like object", BytesIO biến bytes trong RAM thành dạng đó
         with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
             pages = [page.extract_text() or "" for page in pdf.pages]
     except Exception as error:
         raise PdfReadError("Cannot open the file as a PDF") from error
 
     text = "\n\n".join(pages).strip()
-    if not text:
-        raise PdfReadError("No text found in the PDF. It may be a scanned image that needs OCR")
+    if len(text) < MIN_TEXT_CHARS:
+        raise NoTextLayerError("No text found in the PDF. It looks like a scan or photo")
     return text
