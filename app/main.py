@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.config import settings
+from app.auth import require_api_key
 from app.db import InvoiceRecord, LineItemRecord, get_session
 from app.embeddings import attach_embedding
 from app.extractor import ExtractionError, extract_invoice
@@ -13,11 +13,13 @@ from app.pdf_reader import PdfReadError, extract_text
 from app.routes_ask import router as ask_router
 from app.schemas import ExtractResponse, InvoiceSummary, SaveInvoiceRequest
 
-
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024  # 10 MB
 
+# Mọi endpoint (trừ /health) đều yêu cầu khóa API
+protected = [Depends(require_api_key)]
+
 app = FastAPI(title="AI Inbox Automation")
-app.include_router(ask_router)
+app.include_router(ask_router, dependencies=protected)
 
 
 def to_decimal(value: float | None) -> Decimal | None:
@@ -27,10 +29,10 @@ def to_decimal(value: float | None) -> Decimal | None:
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "provider": settings.llm_provider}
+    return {"status": "ok"}
 
 
-@app.post("/extract", response_model=ExtractResponse)
+@app.post("/extract", response_model=ExtractResponse, dependencies=protected)
 def extract(file: UploadFile = File(...)):
     pdf_bytes = file.file.read(MAX_UPLOAD_BYTES + 1)
     if len(pdf_bytes) > MAX_UPLOAD_BYTES:
@@ -52,7 +54,7 @@ def extract(file: UploadFile = File(...)):
     return ExtractResponse(invoice=invoice, issues=issues, needs_review=bool(issues))
 
 
-@app.post("/invoices", response_model=InvoiceSummary, status_code=201)
+@app.post("/invoices", response_model=InvoiceSummary, status_code=201, dependencies=protected)
 def save_invoice(
     payload: SaveInvoiceRequest,
     response: Response,
@@ -118,7 +120,7 @@ def save_invoice(
     return record
 
 
-@app.get("/invoices", response_model=list[InvoiceSummary])
+@app.get("/invoices", response_model=list[InvoiceSummary], dependencies=protected)
 def list_invoices(
     limit: int = Query(20, ge=1, le=100),
     status: str | None = None,

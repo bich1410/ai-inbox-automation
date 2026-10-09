@@ -9,9 +9,12 @@ import os
 import httpx
 import pandas as pd
 import streamlit as st
+from dotenv import load_dotenv
+
+load_dotenv()  # đọc APP_API_KEY từ file .env ở thư mục gốc repo
 
 API_BASE_URL = os.environ.get("API_BASE_URL", "http://127.0.0.1:8000")
-API_KEY = os.environ.get("API_KEY")  # dùng ở tuần 4, khi server có xác thực
+API_KEY = os.environ.get("APP_API_KEY")
 
 st.set_page_config(page_title="AI Inbox", layout="wide")
 

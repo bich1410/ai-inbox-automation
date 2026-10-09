@@ -1,3 +1,4 @@
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -11,6 +12,7 @@ class Settings(BaseSettings):
     agent_model: str | None = None  # để trống thì agent dùng llm_model
     embedding_model: str = "gemini-embedding-001"
     database_url: str
+    app_api_key: str = Field(min_length=24)  # khóa để gọi API của chính server này
 
 
 settings = Settings()

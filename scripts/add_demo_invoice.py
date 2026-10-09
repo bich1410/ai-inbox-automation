@@ -6,6 +6,8 @@ from datetime import date
 import httpx
 from sqlalchemy import select
 
+
+from app.config import settings
 from app.db import InvoiceRecord, SessionLocal
 
 
@@ -27,7 +29,12 @@ def main() -> None:
     }
     payload = {"invoice": invoice, "status": "auto_approved", "source": "demo"}
 
-    response = httpx.post("http://127.0.0.1:8000/invoices", json=payload, timeout=60)
+        response = httpx.post(
+            "http://127.0.0.1:8000/invoices",
+            json=payload,
+            headers={"X-API-Key": settings.app_api_key},
+            timeout=60,
+        )
     print("Mã trạng thái:", response.status_code)
 
     with SessionLocal() as session:

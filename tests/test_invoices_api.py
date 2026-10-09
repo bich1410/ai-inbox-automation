@@ -3,9 +3,10 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
+from app.config import settings
 from app.main import app
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-API-Key": settings.app_api_key})
 
 TRUTH_PATH = Path(__file__).resolve().parent.parent / "data" / "samples" / "ground_truth.json"
 

@@ -5,6 +5,8 @@ from pathlib import Path
 
 import httpx
 
+from app.config import settings
+
 TRUTH_PATH = Path(__file__).resolve().parent.parent / "data" / "samples" / "ground_truth.json"
 
 
@@ -12,7 +14,7 @@ def main() -> None:
     records = json.loads(TRUTH_PATH.read_text(encoding="utf-8"))
     created = existing = 0
 
-    with httpx.Client(timeout=30) as client:
+    with httpx.Client(timeout=30, headers={"X-API-Key": settings.app_api_key}) as client:
         for record in records:
             payload = {"invoice": record, "status": "auto_approved", "source": "seed_script"}
             response = client.post("http://127.0.0.1:8000/invoices", json=payload)

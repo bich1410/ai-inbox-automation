@@ -1,8 +1,9 @@
 from fastapi.testclient import TestClient
 
+from app.config import settings
 from app.main import app
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-API-Key": settings.app_api_key})
 
 
 def test_extract_rejects_non_pdf_upload():
